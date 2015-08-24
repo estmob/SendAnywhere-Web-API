@@ -1,75 +1,73 @@
 Send Anywhere Web API
 ===
 
-### https://send-anywhere.com/web/v1/device
-Create device key.
-
+The base URL for API endpoints is:
 ```
-https://send-anywhere.com/web/v1/device?api_key={API_KEY}&profile_name={PROFILE_NAME}
+  https://send-anywhere.com
 ```
-Parameters   |                     |
--------------|---------------------|
-api_key      | Your API key.       |
-profile_name | Client device name. |
 
-Return Cookie |                    |
---------------|--------------------|
-device_key    | Device unique key. |
+### HTTP Response Status
+* 200 - OK
+* 400 - Bad Request. Invalid request query string.
+* 403 - Forbidden. Invalid `api_key`.
+* 404 - Not Found. Invalid `key`
+* 429 - Too Many Request. To keep the amount of spam on Send Anywhere as low as possible.
+* 500 - Internal Server Error. Something went wrong on our side. We're very sorry.
 
-Send
----
-### https://send-anywhere.com/web/v1/key
-Generate key for sending file.
+### GET /web/v1/device
 
-with Cookie|                |
------------|----------------|
-device_key | Device unique key. |
+Create an unique `device_key` for your client. If `device_key` already exists, just update the device.
 
-#### HTTP status
-* 200
-OK
+
+Parameters   |                    |
+-------------|--------------------|
+profile_name | Client device name |
+
+Response Cookies|                    |
+----------------|--------------------|
+device_key      | Unique device key  |
+
+
+### GET /web/v1/key
+
+Generate a 6-digit `key` for sending files.
+
+Request Cookies |                   |
+----------------|-------------------|
+device_key      | Unique device key |
+
+Response |                  |
+---------|------------------|
+key      | Generated key    |
+weblink  | Upload URL       |
+
+##### Response Sample
 ```
 {
-  "key":"376019",
+  "key":"123456",
   "weblink":"https://file.send-anywhere.com/api/webfile/123456"
 }
 ```
-Return  |                |
---------|----------------|
-key     | Generating key |
-weblink | Upload URL     |
 
-* 401
-Invalid device key
+### /web/v1/key/{KEY}
 
-* 409
-Failed to generate key.
+Query a 6-digit `key` for receiving files.
 
-Receive
----
-### https://send-anywhere.com/web/v1/key/{KEY}
-Generate key for sending file.
+Request Cookies |                   |
+----------------|-------------------|
+device_key      | Unqiue device key |
 
-with Cookie|                |
------------|----------------|
-device_key | Device unique key. |
+Response  |                |
+----------|----------------|
+key       | Requested key  |
+weblink   | Download URL   |
 
-#### HTTP status
-* 200
-OK
+#### Response Sample
+
 ```
 {
-  "key":"376019",
+  "key":"123456",
   "weblink":"https://file.send-anywhere.com/api/webfile/123456"
 }
 ```
-Return  |                |
---------|----------------|
-key     | Requested key  |
-weblink | Upload URL     |
 
-* 401
-Invalid device key
-
-* 404
-Invalid key
