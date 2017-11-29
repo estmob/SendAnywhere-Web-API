@@ -10,7 +10,7 @@
 	<form id="sendForm" class="col-sm-6">
 		<div class="form-group">
 			<label for="">Send</label>
-			<input id="fileInput" name="file[]" type="file" class="form-control"/><br/>
+			<input id="fileInput" name="file[]" type="file" class="form-control" multiple/><br/>
 			<div id="sendBtn" class="btn btn-default form-control">Send</div><br/><br/>
 			<label for="">Key: </label> <span id="key" class="text-success"></span>
 		</div>
@@ -37,18 +37,25 @@
 				}).done(function (data) {
 				});
 			}
-			function createKey(file) {
+			function createKey(files) {
+				var params = { file: [] };
+				var formData = new FormData();
+				for (var i = 0; i < files.length; i++) {
+					var file = files[i];
+					params.file.push({ name: file.name, size: file.size });
+					formData.append("file" + i, file, file.name);
+				}
+
 				$.ajax({
 					url: 'https://send-anywhere.com/web/v1/key',
 					type: 'GET',
+					data: params,
 					dataType: 'jsonp',
 					cache: false
 				}).done(function (data, textStatus, xhr) {
 					$('#key').text(data.key);
-
-					var formData = new FormData($('#sendForm')[0]);
 					sendFile(data.weblink, formData);
-				})
+				});
 			}
 
 			function sendFile(url, data) {
@@ -90,7 +97,7 @@
 			$('#sendBtn').click(function (){
 				var files = $('#fileInput').prop('files')
 				if (files.length > 0) {
-					createKey(files[0]);
+					createKey(files);
 				}
 			});
 
