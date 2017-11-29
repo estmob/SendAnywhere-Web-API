@@ -98,6 +98,10 @@ device_key      | Unique device key  |
 
 Generate a 6-digit `key` for sending files.
 
+Parameters   |                    |
+-------------|--------------------|
+file         | File list          |
+
 Request Cookies |                   |
 ----------------|-------------------|
 device_key      | Unique device key |
@@ -107,6 +111,12 @@ Response |                  |
 key      | Generated key    |
 weblink  | Upload URL       |
 
+##### Request Sample
+```
+{
+  "file":[ { "name": "file1.txt", "size": 1}, { "name": "file2.txt", "size": 2} ]
+}
+```
 ##### Response Sample
 ```
 {
