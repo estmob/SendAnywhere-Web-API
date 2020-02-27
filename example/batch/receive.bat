@@ -1,9 +1,6 @@
 @ECHO OFF
 
-PUSHD "%~dp0"
-
 jq --version & curl --version
-CLS
 IF NOT "%ERRORLEVEL%" == "0" GOTO NOT_INSTALLED
 
 CALL AUTH.BAT
@@ -33,7 +30,7 @@ ECHO jq or curl is not installed!
 EXIT /b
 
 :KEY_NOT_FOUND
-ECHO Require receive key!
+ECHO Requires receive key!
 EXIT /b
 
 :INVALID_KEY

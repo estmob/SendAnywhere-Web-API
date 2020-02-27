@@ -1,9 +1,6 @@
 @ECHO OFF
 
-PUSHD "%~dp0"
-
 curl --version
-CLS
 IF NOT "%ERRORLEVEL%" == "0" GOTO NOT_INSTALLED
 
 SET TOKEN_FILE=.sendanywhere-token.txt

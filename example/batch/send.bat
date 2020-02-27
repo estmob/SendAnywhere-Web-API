@@ -1,9 +1,6 @@
 @ECHO OFF
 
-PUSHD "%~dp0"
-
 jq --version & curl --version
-CLS
 IF NOT "%ERRORLEVEL%" == "0" GOTO NOT_INSTALLED
 
 CALL AUTH.BAT
