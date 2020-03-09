@@ -14,6 +14,8 @@ FOR %%A IN (%*) DO (
 )
 CALL SET BODY_OBJECT=%%BODY_OBJECT:"=\"%%
 SET BODY_OBJECT=%BODY_OBJECT:~0,-1%]}
+REM mode setting (default direct)
+REM SET BODY_OBJECT=%BODY_OBJECT:~0,-1%],\"mode\":\"upload\"}
 
 curl -s -b %TOKEN_FILE% ^
 	-H "Content-Type: application/json" ^
