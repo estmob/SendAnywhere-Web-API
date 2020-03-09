@@ -26,8 +26,11 @@ BODY_OBJECT='{"file":[';
 for FILE in $*; do
     BODY_OBJECT=$BODY_OBJECT'{"name":"'$FILE'","size":'$(stat -c%s $FILE)'}',
 done
+
 BODY_OBJECT=${BODY_OBJECT::-1}
 BODY_OBJECT=$BODY_OBJECT']}'
+# mode setting (default direct)
+# BODY_OBJECT=$BODY_OBJECT'], "mode": "upload"}'
 
 echo $BODY_OBJECT
 
