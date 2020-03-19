@@ -30,7 +30,7 @@ done
 BODY_OBJECT=${BODY_OBJECT::-1}
 BODY_OBJECT=$BODY_OBJECT']}'
 # mode setting (default direct)
-# BODY_OBJECT=$BODY_OBJECT'], "mode": "upload"}'
+# BODY_OBJECT=$BODY_OBJECT'],"mode":"upload"}'
 
 echo $BODY_OBJECT
 
